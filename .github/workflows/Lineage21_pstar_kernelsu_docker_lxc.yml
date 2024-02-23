@@ -1,5 +1,6 @@
 name: (pstar) (LineageOS 21) (KernelSU docker lxc) Build Kernel
 on:
+  push:
   watch:
     types: [started]
   schedule:

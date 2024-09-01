@@ -74,7 +74,7 @@ jobs:
         )
 
         for CONFIG in "${CONFIG_LIST[@]}"; do
-            if [[ "$CONFIG" == "EXTRA_CMDS" || "$CONFIG" == "CUSTOM_CMDS" ]] || "$CONFIG" == "Generate_Build_Config_Command" ]]; then
+            if [[ "$CONFIG" == "EXTRA_CMDS" || "$CONFIG" == "CUSTOM_CMDS" || "$CONFIG" == "Generate_Build_Config_Command" ]]; then
                 echo "$CONFIG=$(grep -w "$CONFIG" "$CONFIG_ENV" | head -n 1 | cut -d ":" -f 2)" >> $GITHUB_ENV
             else
                 echo "$CONFIG=$(grep -w "$CONFIG" "$CONFIG_ENV" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV

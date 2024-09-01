@@ -1,4 +1,4 @@
-name: (pstar) (LineageOS 21) (KernelSU docker lxc) Build Kernel
+name: (pstar) (LineageOS 21) (KernelSU nethunter) Build Kernel
 on:
   push:
   watch:
@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Prepare Configuration
       run: |
-        CONFIG_ENV=$(grep -w "CONFIG_ENV" Lineage21_pstar_kernelsu_docker_lxc.env | head -n 1 | cut -d "=" -f 2)
+        CONFIG_ENV=$(grep -w "CONFIG_ENV" Lineage21_pstar_kernelsu_nethunter.env | head -n 1 | cut -d "=" -f 2)
         CONFIG_LIST=(
             KERNEL_SOURCE
             KERNEL_SOURCE_BRANCH

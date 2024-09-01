@@ -70,11 +70,11 @@ jobs:
             Remove_ANDROID_PARANOID_NETWORK
             Add_Kali_Nethunter_Patches
             Generate_Build_Config
-            REMOVE_UNUSED_PACKAGES
+            Generate_Build_Config_Command
         )
 
         for CONFIG in "${CONFIG_LIST[@]}"; do
-            if [[ "$CONFIG" == "EXTRA_CMDS" || "$CONFIG" == "CUSTOM_CMDS" ]]; then
+            if [[ "$CONFIG" == "EXTRA_CMDS" || "$CONFIG" == "CUSTOM_CMDS" ]] || "$CONFIG" == "Generate_Build_Config_Command" ]]; then
                 echo "$CONFIG=$(grep -w "$CONFIG" "$CONFIG_ENV" | head -n 1 | cut -d ":" -f 2)" >> $GITHUB_ENV
             else
                 echo "$CONFIG=$(grep -w "$CONFIG" "$CONFIG_ENV" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
@@ -208,11 +208,7 @@ jobs:
       if: env.Generate_Build_Config == 'true'
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-        cat arch/arm64/configs/vendor/kona-perf_defconfig \
-        arch/arm64/configs/vendor/ext_config/moto-kona.config \
-        arch/arm64/configs/vendor/ext_config/pstar-default.config \
-        arch/arm64/configs/vendor/debugfs.config \
-        >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
+        ${{ env.Generate_Build_Config_Command}}
 
     - name: Download Patches
       run: |
@@ -560,7 +556,7 @@ jobs:
         git clone https://github.com/osm0sis/AnyKernel3 --depth=1 AnyKernel3
         sed -i 's/do.devicecheck=1/do.devicecheck=0/g' AnyKernel3/anykernel.sh
         sed -i 's!BLOCK=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;!BLOCK=auto;!g' AnyKernel3/anykernel.sh
-        sed -i 's/IS_SLOT_DEVICE=0;/IS_SLOT_DEVICE=auto;/g' AnyKernel3/anykernel.sh
+        sed -i 's/IS_SLOT_DEVICE=0;/is_slot_device=auto;/g' AnyKernel3/anykernel.sh
         cp android-kernel/out/arch/${{ env.ARCH }}/boot/${{ env.KERNEL_IMAGE_NAME }} AnyKernel3/
         if [ ${{ env.CHECK_DTBO_IS_OK }} = true ]; then
             cp android-kernel/out/arch/${{ env.ARCH }}/boot/dtbo.img AnyKernel3/

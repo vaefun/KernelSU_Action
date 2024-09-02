@@ -291,7 +291,8 @@ jobs:
         -e CONFIG_FHANDLE \
         -e CONFIG_UNIX_DIAG \
         -e CONFIG_PACKET_DIAG \
-        -e CONFIG_NETLINK_DIAG
+        -e CONFIG_NETLINK_DIAG \
+        -e CONFIG_VT
 
     - name: Apply patches for kali nethunter
       if: env.Add_Kali_Nethunter_Patches == 'true'

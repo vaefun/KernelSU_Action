@@ -291,8 +291,8 @@ jobs:
         -e CONFIG_FHANDLE \
         -e CONFIG_UNIX_DIAG \
         -e CONFIG_PACKET_DIAG \
-        -e CONFIG_NETLINK_DIAG \
-        -e CONFIG_VT
+        -e CONFIG_NETLINK_DIAG
+        # CONFIG_VT will cause the apps which was granted root perm by kernelsu can not have access /dev/pts so I rather disable it
 
     - name: Apply patches for kali nethunter
       if: env.Add_Kali_Nethunter_Patches == 'true'
